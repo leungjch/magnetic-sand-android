@@ -1,4 +1,4 @@
-package com.example.physicsfractals;
+package com.leungjch.physicsfractals;
 
 public class RustGreetings {
 

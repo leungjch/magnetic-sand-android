@@ -4,18 +4,6 @@ use rand::prelude::*;
 use std::ffi::{CStr, CString};
 use std::mem;
 use std::os::raw::c_char;
-#[no_mangle]
-pub extern "C" fn rust_greeting(to: *const c_char) -> *mut c_char {
-    let c_str = unsafe { CStr::from_ptr(to) };
-    let recipient = match c_str.to_str() {
-        Err(_) => "there",
-        Ok(string) => string,
-    };
-
-    CString::new("Hellooooo ".to_owned() + recipient)
-        .unwrap()
-        .into_raw()
-}
 
 #[cfg(feature = "parallel")]
 use rayon::prelude::*;
@@ -292,6 +280,21 @@ impl Universe {
         self.magnets.clear();
     }
 
+    pub fn clear_and_spawn_random_magnets(&mut self, n: u32) {
+        self.magnets.clear();
+        
+        for i in 0..n {
+            let range_x = Uniform::from(0.0..self.width as f64);
+            let range_y = Uniform::from(0.0..self.height as f64);
+            let mut rng = rand::thread_rng();
+            // TODO: Replace with constants
+            let rand_interval = Uniform::<u32>::from(50..150);
+            self.create_magnet(range_x.sample(&mut rng), 
+            range_y.sample(&mut rng), 
+            1.0_f64, 1.0_f64)
+        }
+    }
+
     pub fn add_pendulum(&mut self, pendulum: Pendulum) {
         self.pendulums.push(pendulum);
     }
@@ -425,6 +428,7 @@ impl Universe {
                     m.vel.y.to_be_bytes(),
                     m.acc.x.to_be_bytes(),
                     m.acc.y.to_be_bytes(),
+                    m.mass.to_be_bytes(),
                 ];
                 m_bytes.into_iter().flatten()
             }   
@@ -771,10 +775,10 @@ impl FractalGenerator {
                 // let max_iters = *(max_iters_map.get(&color).unwrap());
                 // let max_iters = 10;
                 vec![
+                    255,
                     (color.r as f64 * (1.0 - (iters as f64) / (max_iters as f64))) as u8,
                     (color.g as f64 * (1.0 - (iters as f64) / (max_iters as f64))) as u8,
                     (color.b as f64 * (1.0 - (iters as f64) / (max_iters as f64))) as u8,
-                    255,
                 ]
             })
     }

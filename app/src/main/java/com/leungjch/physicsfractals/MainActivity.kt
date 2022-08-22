@@ -19,15 +19,20 @@ class MainActivity : AppCompatActivity() {
         val g = RustGreetings()
         val ru = RustUniverse()
         val r = g.sayHello("cargo!")
-        val textView: TextView = findViewById(R.id.greetingField) as TextView
-        textView.text = r
-        val universeWidth = ru.getWidth()
-        val universeHeight = ru.getHeight()
+        println(r)
+        val universeWidth = RustUniverse.getWidth()
+        val universeHeight = RustUniverse.getHeight()
+//        val textView: TextView = findViewById(R.id.greetingField) as TextView
+//        textView.text = r
         println(universeWidth.toString())
 
-        ru.createMagnet((universeWidth/2.0).toDouble(), (universeHeight/2.0).toDouble(), 10.0, 10.0)
-        val x = ru.getMagnets()
-        println(x[0])
-
+//        RustUniverse.createMagnet((universeWidth/2.0).toDouble(), (universeHeight/2.0).toDouble(), 0.1, 2.0)
+//        RustUniverse.createMagnet((universeWidth/4.0).toDouble(), (universeHeight/2.0).toDouble(), 0.1, 2.0)
+        val x = RustUniverse.getMagnets()
+        RustUniverse.clearAndSpawnRandomMagnets(3)
+//        RustUniverse.spawnRandomEmitters(10, 0.0, 0.0, 1.0)
+        val rgb = RustUniverse.generateFractal(64, 64, 1.0, 1.0, 1.0)
+        println("HEllo")
+        println(rgb)
     }
 }
