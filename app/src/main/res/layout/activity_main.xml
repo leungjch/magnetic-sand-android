@@ -18,7 +18,35 @@
 <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <com.leungjch.physicsfractals.GameView
+        android:id="@+id/gameView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Button"
+        app:iconPadding="0dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Button"
+        app:iconPadding="0dp" />
 
 </RelativeLayout>

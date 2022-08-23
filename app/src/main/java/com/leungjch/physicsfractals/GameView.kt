@@ -8,11 +8,8 @@ import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import java.nio.ByteBuffer
-
-
-/**
- * GameView is our playground.
- */
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.*
 
 class GameView(context: Context, attributes: AttributeSet) : SurfaceView(context, attributes), SurfaceHolder.Callback {
     private val thread: GameThread
@@ -40,6 +37,8 @@ class GameView(context: Context, attributes: AttributeSet) : SurfaceView(context
         val conf = Bitmap.Config.ARGB_8888 // see other conf types
         background = Bitmap.createBitmap(width, height, conf)
 
+        renderFractalIteratively()
+
     }
 
     override fun surfaceDestroyed(surfaceHolder: SurfaceHolder) {
@@ -56,6 +55,34 @@ class GameView(context: Context, attributes: AttributeSet) : SurfaceView(context
         }
     }
 
+    private fun renderFractalIteratively() {
+
+        GlobalScope.launch {
+            (1..32 step 2).map {
+                val imageWidth = 8 * it;
+                val imageHeight = 8 * it;
+                val bitmapData = RustUniverse.generateFractal(
+                    imageWidth,
+                    imageHeight,
+                    0.0,
+                    0.0,
+                    1.0
+                )
+                val bmp = Bitmap.createBitmap(
+                    imageWidth,
+                    imageHeight,
+                    Bitmap.Config.ARGB_8888
+                )
+                val buffer: ByteBuffer = ByteBuffer.wrap(bitmapData)
+                bmp.copyPixelsFromBuffer(buffer)
+                background =
+                    Bitmap.createScaledBitmap(bmp, width, height, false)
+            }
+        }
+    }
+
+
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         println(event!!.action)
         when (event!!.action) {
@@ -64,15 +91,8 @@ class GameView(context: Context, attributes: AttributeSet) : SurfaceView(context
                 RustUniverse.spawnPendulum(pos.x, pos.y, 0.001, 0.1, 1.0)
             }
             MotionEvent.ACTION_UP -> {
-                println("Getting fractal")
-                val imageWidth = width/10;
-                val imageHeight = height/10;
-                val bitmapData = RustUniverse.generateFractal(imageWidth, imageHeight, 0.0, 0.0, 1.0)
-                println("Getting fractal done")
-                val bmp = Bitmap.createBitmap(imageWidth, imageHeight, Bitmap.Config.ARGB_8888)
-                val buffer: ByteBuffer = ByteBuffer.wrap(bitmapData)
-                bmp.copyPixelsFromBuffer(buffer)
-                background = bmp
+//                println("Getting fractal")
+                        renderFractalIteratively()
 //                println("DONE PARSE")
             }
         }
