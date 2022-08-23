@@ -13,7 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
-
+NDK
 
 # Added by cargo
 
