@@ -25,17 +25,17 @@
         android:layout_marginBottom="0dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/resetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        android:text="Button"
+        android:text="Reset"
         app:iconPadding="0dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/loadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -46,7 +46,9 @@
         android:layout_marginBottom="0dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        android:text="Button"
+        android:text="Load"
         app:iconPadding="0dp" />
+
+
 
 </RelativeLayout>

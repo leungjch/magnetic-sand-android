@@ -101,6 +101,11 @@ public class RustUniverse {
         rClearAndSpawnRandomMagnets(n);
     }
 
+    public static native void rClearAll();
+    public static void clearAll() {
+        rClearAll();
+    }
+
 
     public static native void rSpawnRandomEmitters(int n, double tension, double friction, double mass);
     public static void spawnRandomEmitters(int n, double tension, double friction, double mass) {

@@ -11,10 +11,18 @@ import java.nio.ByteBuffer
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.*
 
+
 class GameView(context: Context, attributes: AttributeSet) : SurfaceView(context, attributes), SurfaceHolder.Callback {
+    enum class PLACEMENT_TYPES {
+        PARTICLE, MAGNET, EMITTER
+    }
+
     private val thread: GameThread
     private val SCALEFACTOR = 16
     private lateinit var background : Bitmap
+    public var placementType = PLACEMENT_TYPES.PARTICLE
+
+
     init {
 
         // add callback
@@ -64,8 +72,8 @@ class GameView(context: Context, attributes: AttributeSet) : SurfaceView(context
                 val bitmapData = RustUniverse.generateFractal(
                     imageWidth,
                     imageHeight,
-                    0.0,
-                    0.0,
+                    0.2,
+                    0.1,
                     1.0
                 )
                 val bmp = Bitmap.createBitmap(
@@ -84,16 +92,27 @@ class GameView(context: Context, attributes: AttributeSet) : SurfaceView(context
 
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        println(event!!.action)
+        val pos = Vec2D(event!!.getX().toDouble()/width*RustUniverse.getWidth(), event.getY().toDouble()/height*RustUniverse.getHeight())
         when (event!!.action) {
-            MotionEvent.ACTION_MOVE, MotionEvent.ACTION_DOWN-> {
-                val pos = Vec2D(event.getX().toDouble()/width*RustUniverse.getWidth(), event.getY().toDouble()/height*RustUniverse.getHeight())
-                RustUniverse.spawnPendulum(pos.x, pos.y, 0.001, 0.1, 1.0)
+            MotionEvent.ACTION_MOVE -> {
+
+            }
+            MotionEvent.ACTION_DOWN -> {
+
+                when (placementType) {
+                    PLACEMENT_TYPES.PARTICLE -> {
+                        RustUniverse.spawnPendulum(pos.x, pos.y, 0.001, 0.1, 1.0)
+                    }
+                    PLACEMENT_TYPES.MAGNET -> {
+                        RustUniverse.spawnMagnet(pos.x, pos.y, 1.5, 2.0)
+                        renderFractalIteratively()
+                    }
+
+
+                }
             }
             MotionEvent.ACTION_UP -> {
-//                println("Getting fractal")
-                        renderFractalIteratively()
-//                println("DONE PARSE")
+
             }
         }
         return true
@@ -119,6 +138,7 @@ class GameView(context: Context, attributes: AttributeSet) : SurfaceView(context
         paint.setStyle(Paint.Style.FILL)
         paint.setColor(Color.WHITE)
 
+        canvas.drawBitmap(background, 0.0.toFloat(), 0.0.toFloat(), paint)
         for (magnet in magnets) {
             val pos: Vec2D = Utils.universeToGameCoords(magnet.pos, canvas.width, canvas.height)
             // Scale the radius
@@ -129,7 +149,14 @@ class GameView(context: Context, attributes: AttributeSet) : SurfaceView(context
             val pos: Vec2D = Utils.universeToGameCoords(pendulum.pos, canvas.width, canvas.height)
             canvas.drawCircle(pos.x.toFloat(), pos.y.toFloat(),5.0.toFloat(), paint )
         }
-        canvas.drawBitmap(background, 0.0.toFloat(), 0.0.toFloat(), paint)
+    }
+
+    fun clearAll() {
+        RustUniverse.clearAll()
+    }
+
+    fun clearAndRandomize(n: Int) {
+        RustUniverse.clearAndSpawnRandomMagnets(n)
     }
 
 }

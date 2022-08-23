@@ -24,9 +24,9 @@ pub mod android {
         pendulums: vec![],
         magnets: vec![],
         emitters: vec![],
-        steps: 500,
-        delta: 0.001,
-        max_iters: 100,
+        steps: 100,
+        delta: 0.01,
+        max_iters: 500,
     };
 
 
@@ -170,6 +170,14 @@ pub mod android {
         n: jint,
     ) {
        UNIVERSE.clear_and_spawn_random_magnets(n as u32) 
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn Java_com_leungjch_physicsfractals_RustUniverse_rClearAll(
+        env: JNIEnv,
+        _class: JClass,
+    ) {
+       UNIVERSE.clear_all()
     }
 
     #[no_mangle]

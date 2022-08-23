@@ -276,6 +276,12 @@ impl Universe {
         self.nums[i]
     }
 
+    pub fn clear_all(&mut self) {
+        self.clear_magnets();
+        self.clear_emitters();
+        self.clear_pendulums();
+    }
+
     pub fn clear_magnets(&mut self) {
         self.magnets.clear();
     }
@@ -288,10 +294,9 @@ impl Universe {
             let range_y = Uniform::from(0.0..self.height as f64);
             let mut rng = rand::thread_rng();
             // TODO: Replace with constants
-            let rand_interval = Uniform::<u32>::from(50..150);
             self.create_magnet(range_x.sample(&mut rng), 
             range_y.sample(&mut rng), 
-            1.0_f64, 1.0_f64)
+            0.1_f64, 2.0_f64)
         }
     }
 
@@ -775,10 +780,10 @@ impl FractalGenerator {
                 // let max_iters = *(max_iters_map.get(&color).unwrap());
                 // let max_iters = 10;
                 vec![
-                    255,
                     (color.r as f64 * (1.0 - (iters as f64) / (max_iters as f64))) as u8,
                     (color.g as f64 * (1.0 - (iters as f64) / (max_iters as f64))) as u8,
                     (color.b as f64 * (1.0 - (iters as f64) / (max_iters as f64))) as u8,
+                    255,
                 ]
             })
     }
