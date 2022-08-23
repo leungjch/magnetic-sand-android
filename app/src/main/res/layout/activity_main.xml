@@ -5,7 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:layout_alignParentStart="false"
+    android:layout_alignParentTop="false"
+    android:layout_alignParentBottom="false"
+    android:layout_centerInParent="true"
+    android:layout_centerHorizontal="false"
+    android:layout_centerVertical="false">
+
+
+>
 
 <!--    <TextView-->
 <!--        android:id="@+id/greetingField"-->
@@ -24,31 +33,120 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp" />
 
-    <Button
-        android:id="@+id/resetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="Reset"
-        app:iconPadding="0dp" />
 
-    <Button
-        android:id="@+id/loadButton"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="false"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="false"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="Load"
-        app:iconPadding="0dp" />
+        android:layout_centerInParent="true"
+        android:layout_margin="0dp"
+        android:weightSum="5">
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#d32f2f"
+            android:backgroundTint="#d32f2f"
+            android:text="Reset"
+            android:textColor="#ffffff" />
+
+        <View android:layout_height="fill_parent"
+            android:layout_width="1px"
+            android:background="#90909090"/>
+
+        <Button
+            android:id="@+id/loadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#f57c00"
+            android:text="Load"
+            android:textColor="#ffffff"
+            />
+
+        <View android:layout_height="fill_parent"
+            android:layout_width="1px"
+            android:background="#90909090"/>
+
+        <Button
+            android:id="@+id/placementButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#648dae"
+            android:text="Particle"
+
+            android:textColor="#ffffff" />
+
+        <View android:layout_height="fill_parent"
+            android:layout_width="1px"
+            android:background="#90909090"/>
 
 
+        <Button
+            android:id="@+id/optionButton"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#648dae"
+            android:text="Options"
+
+            android:textColor="#ffffff" />
+
+        <View android:layout_height="fill_parent"
+            android:layout_width="2px"
+            android:background="#90909090"/>
+
+<!--        <Button-->
+<!--            android:id="@+id/objectSizeType"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="#648dae"-->
+<!--            android:textColor="#ffffff"-->
+
+<!--            android:text="Size" />-->
+
+
+<!--        <View android:layout_height="fill_parent"-->
+<!--            android:layout_width="2px"-->
+<!--            android:background="#90909090"/>-->
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="false"
+        android:layout_centerInParent="true"
+        android:layout_margin="0dp"
+        android:weightSum="5">
+
+        <Button
+            android:id="@+id/displayButton"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#648dae"
+            android:text="View"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

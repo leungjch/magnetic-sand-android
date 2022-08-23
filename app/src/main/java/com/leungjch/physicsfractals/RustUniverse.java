@@ -122,9 +122,21 @@ public class RustUniverse {
         rSpawnMagnet(x, y, strength, radius);
     }
 
+    public static native void rSpawnEmitter(double x, double y, int interval, double tension, double friction, double mass);
+    public static void spawnEmitter(double x, double y, int interval, double tension, double friction, double mass) {
+        rSpawnEmitter(x, y, interval, tension , friction , mass);
+    }
 
     public static native byte[] rGenerateFractal(int image_width, int image_height, double tension, double friction, double mass);
     public static byte[] generateFractal(int image_width, int image_height, double tension, double friction, double mass) {
         return rGenerateFractal(image_width, image_height, tension, friction, mass);
+    }
+    public static native void rSetWidth(int width);
+    public static void setWidth(int width) {
+        rSetWidth(width);
+    }
+    public static native void rSetHeight(int height);
+    public static void setHeight(int height) {
+        rSetHeight(height);
     }
 }

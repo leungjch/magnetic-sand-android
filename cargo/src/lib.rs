@@ -152,8 +152,8 @@ impl Rgb {
 
 #[repr(C)]
 pub struct Universe {
-    width: u32,
-    height: u32,
+    pub width: u32,
+    pub height: u32,
     /// a vector of size width*height, where cells[i]
     /// represents the index of the magnet in the magents vector, or -1 if indeterminate
     pendulums: Vec<Pendulum>,
@@ -596,8 +596,11 @@ impl Pendulum {
 
         // Euler integration
         for _ in 0..steps {
-            self.vel = self.vel + self.acc * delta;
-            self.pos = self.pos + self.vel * delta;
+            self.vel = (self.vel + self.acc * delta);
+            self.pos = (self.pos + self.vel * delta);
+
+            // self.pos.x = self.pos.x % (width as f64);
+            // self.pos.y = self.pos.y % (height as f64);
         }
     }
 }

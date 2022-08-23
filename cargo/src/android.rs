@@ -24,8 +24,8 @@ pub mod android {
         pendulums: vec![],
         magnets: vec![],
         emitters: vec![],
-        steps: 100,
-        delta: 0.01,
+        steps: 200,
+        delta: 0.005,
         max_iters: 500,
     };
 
@@ -152,6 +152,19 @@ pub mod android {
     }
 
     #[no_mangle]
+    pub unsafe extern "C" fn Java_com_leungjch_physicsfractals_RustUniverse_rSpawnEmitter(
+        env: JNIEnv,
+        _class: JClass,
+        x: jdouble,
+        y: jdouble,
+        interval: jint,
+        tension: jdouble,
+        friction: jdouble,
+        mass: jdouble,
+    ) {
+       UNIVERSE.create_emitter(x as f64 , y as f64, interval as u32, tension as f64, friction as f64, mass as f64)
+    }
+    #[no_mangle]
     pub unsafe extern "C" fn Java_com_leungjch_physicsfractals_RustUniverse_rSpawnRandomEmitters(
         env: JNIEnv,
         _class: JClass,
@@ -196,4 +209,20 @@ pub mod android {
 
     }
 
+    #[no_mangle]
+    pub unsafe extern "C" fn Java_com_leungjch_physicsfractals_RustUniverse_rSetWidth(
+        env: JNIEnv,
+        _class: JClass,
+        width: jint,
+    ) {
+        UNIVERSE.width = width as u32
+    }
+    #[no_mangle]
+    pub unsafe extern "C" fn Java_com_leungjch_physicsfractals_RustUniverse_rSetHeight(
+        env: JNIEnv,
+        _class: JClass,
+        height: jint,
+    ) {
+        UNIVERSE.height = height as u32
+    }
 }
