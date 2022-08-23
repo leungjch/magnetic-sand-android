@@ -19,3 +19,5 @@ NDK
 
 /target
 /Cargo.lock
+cargo/target/release/deps
+.idea
