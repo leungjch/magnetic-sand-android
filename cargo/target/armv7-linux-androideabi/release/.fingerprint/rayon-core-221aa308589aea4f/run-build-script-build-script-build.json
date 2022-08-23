@@ -1,0 +1,1 @@
+{"rustc":14997152855509374802,"features":"","target":0,"profile":0,"path":0,"deps":[[4643147511799346279,"build_script_build",false,12689248336632347458]],"local":[{"RerunIfChanged":{"output":"armv7-linux-androideabi/release/build/rayon-core-221aa308589aea4f/output","paths":["build.rs"]}}],"rustflags":[],"metadata":0,"config":0,"compile_kind":0}

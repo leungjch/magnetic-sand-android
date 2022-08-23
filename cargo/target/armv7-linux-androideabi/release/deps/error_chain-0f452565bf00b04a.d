@@ -1,0 +1,10 @@
+/home/leungjch/AndroidStudioProjects/PhysicsFractals/cargo/target/armv7-linux-androideabi/release/deps/error_chain-0f452565bf00b04a.rmeta: /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/lib.rs /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/quick_error.rs /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/error_chain.rs /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/quick_main.rs
+
+/home/leungjch/AndroidStudioProjects/PhysicsFractals/cargo/target/armv7-linux-androideabi/release/deps/liberror_chain-0f452565bf00b04a.rlib: /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/lib.rs /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/quick_error.rs /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/error_chain.rs /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/quick_main.rs
+
+/home/leungjch/AndroidStudioProjects/PhysicsFractals/cargo/target/armv7-linux-androideabi/release/deps/error_chain-0f452565bf00b04a.d: /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/lib.rs /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/quick_error.rs /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/error_chain.rs /home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/quick_main.rs
+
+/home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/lib.rs:
+/home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/quick_error.rs:
+/home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/error_chain.rs:
+/home/leungjch/.cargo/registry/src/github.com-1ecc6299db9ec823/error-chain-0.10.0/src/quick_main.rs:

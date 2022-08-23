@@ -1,0 +1,4 @@
+cargo:rerun-if-changed=src/java_jni/jni-include.rs
+cargo:rerun-if-changed=src/cpp/cpp-include.rs
+cargo:rerun-if-changed=tests/test_includes_syntax.rs
+cargo:rerun-if-changed=tests/expectations/tests.list
