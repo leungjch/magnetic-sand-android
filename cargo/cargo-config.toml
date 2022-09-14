@@ -9,3 +9,7 @@ linker = "/home/leungjch/AndroidStudioProjects/PhysicsFractals/NDK/arm/bin/arm-l
 [target.i686-linux-android]
 ar = "/home/leungjch/AndroidStudioProjects/PhysicsFractals/NDK/x86/bin/i686-linux-android-ar"
 linker = "/home/leungjch/AndroidStudioProjects/PhysicsFractals/NDK/x86/bin/i686-linux-android-clang"
+
+[target.x86_64-linux-android]
+ar = "/home/leungjch/AndroidStudioProjects/PhysicsFractals/NDK/x86/bin/x86_64-linux-android-ar"
+linker = "/home/leungjch/AndroidStudioProjects/PhysicsFractals/NDK/x86/bin/x86_64-linux-android26-clang"

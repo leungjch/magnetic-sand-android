@@ -53,6 +53,16 @@ class GameThread(private val surfaceHolder: SurfaceHolder, private val gameView:
         }
     }
 
+
+//    fun pause() {
+//        running = false
+//        try {
+//            thread.join()
+//        } catch (e: InterruptedException) {
+//        }
+//    }
+
+
     companion object {
         private var canvas: Canvas? = null
     }

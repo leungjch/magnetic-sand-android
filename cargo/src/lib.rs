@@ -154,6 +154,8 @@ impl Rgb {
 pub struct Universe {
     pub width: u32,
     pub height: u32,
+    pub display_width: u32,
+    pub display_height: u32,
     /// a vector of size width*height, where cells[i]
     /// represents the index of the magnet in the magents vector, or -1 if indeterminate
     pendulums: Vec<Pendulum>,
@@ -165,6 +167,7 @@ pub struct Universe {
     nums: Vec<f64>,
     steps: u32,
     delta: f64,
+    
 }
 
 impl Universe {
@@ -197,6 +200,8 @@ impl Universe {
         Universe {
             width,
             height,
+            display_width: width,
+            display_height: height,
             pendulums,
             magnets,
             emitters: vec![],
@@ -288,6 +293,8 @@ impl Universe {
 
     pub fn clear_and_spawn_random_magnets(&mut self, n: u32) {
         self.magnets.clear();
+        self.pendulums.clear();
+        self.emitters.clear();
         
         for i in 0..n {
             let range_x = Uniform::from(0.0..self.width as f64);
@@ -318,7 +325,7 @@ impl Universe {
         let range_y = Uniform::from(0.0..self.height as f64);
         let mut rng = rand::thread_rng();
         // TODO: Replace with constants
-        let rand_interval = Uniform::<u32>::from(50..150);
+        let rand_interval = Uniform::<u32>::from(1..5);
         (0..n).into_iter().for_each(|_| {
             self.emitters.push(Emitter::new(
                 range_x.sample(&mut rng),
@@ -359,6 +366,8 @@ impl Universe {
                 &self.magnets,
                 self.width,
                 self.height,
+                self.display_width,
+                self.display_height,
                 self.steps,
                 self.delta,
             );
@@ -556,7 +565,7 @@ impl Pendulum {
         self.pos
     }
     // Perform euler integration to determine the next position
-    fn tick(&mut self, magnets: &Vec<Magnet>, width: u32, height: u32, steps: u32, delta: f64) {
+    fn tick(&mut self, magnets: &Vec<Magnet>, width: u32, height: u32, display_width: u32, display_height: u32, steps: u32, delta: f64) {
         // If the pendulum is marked stationary, don't move
         if self.is_stationary {
             return;
@@ -596,11 +605,17 @@ impl Pendulum {
 
         // Euler integration
         for _ in 0..steps {
-            self.vel = (self.vel + self.acc * delta);
-            self.pos = (self.pos + self.vel * delta);
+            self.vel = self.vel + self.acc * delta;
+            self.pos = self.pos + self.vel * delta;
 
-            // self.pos.x = self.pos.x % (width as f64);
-            // self.pos.y = self.pos.y % (height as f64);
+            // self.pos.x = self.pos.x % ((64) as f64);
+            // if self.pos.x < 0.0 {
+            //     self.pos.x = width as f64
+            // }
+            // self.pos.y = self.pos.y % ((64) as f64);
+            // if self.pos.y < 0.0 {
+            //     self.pos.y = height as f64
+            // }
         }
     }
 }
@@ -817,6 +832,8 @@ impl FractalGenerator {
                 &universe.magnets,
                 universe.width,
                 universe.height,
+                universe.display_width,
+                universe.display_height,
                 universe.steps,
                 universe.delta,
             );

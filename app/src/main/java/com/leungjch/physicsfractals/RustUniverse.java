@@ -139,4 +139,12 @@ public class RustUniverse {
     public static void setHeight(int height) {
         rSetHeight(height);
     }
+    public static native void rSetSteps(int steps);
+    public static void setSteps(int steps) {
+        rSetSteps(steps);
+    }
+    public static native void rSetMaxIters(int maxIters);
+    public static void setMaxIters(int maxIters) {
+        rSetMaxIters(maxIters);
+    }
 }

@@ -20,6 +20,8 @@ pub mod android {
     static mut UNIVERSE: Universe = Universe {
         width: 64,
         height: 64,
+        display_width: 64,
+        display_height: 64,
         nums: vec![],
         pendulums: vec![],
         magnets: vec![],
@@ -215,7 +217,7 @@ pub mod android {
         _class: JClass,
         width: jint,
     ) {
-        UNIVERSE.width = width as u32
+        UNIVERSE.display_width = width as u32
     }
     #[no_mangle]
     pub unsafe extern "C" fn Java_com_leungjch_physicsfractals_RustUniverse_rSetHeight(
@@ -223,6 +225,22 @@ pub mod android {
         _class: JClass,
         height: jint,
     ) {
-        UNIVERSE.height = height as u32
+        UNIVERSE.display_height = height as u32
+    }
+    #[no_mangle]
+    pub unsafe extern "C" fn Java_com_leungjch_physicsfractals_RustUniverse_rSetSteps(
+        env: JNIEnv,
+        _class: JClass,
+        steps: jint,
+    ) {
+        UNIVERSE.steps = steps as u32
+    }
+    #[no_mangle]
+    pub unsafe extern "C" fn Java_com_leungjch_physicsfractals_RustUniverse_rSetMaxIters(
+        env: JNIEnv,
+        _class: JClass,
+        max_iters: jint,
+    ) {
+        UNIVERSE.max_iters = max_iters as u32
     }
 }

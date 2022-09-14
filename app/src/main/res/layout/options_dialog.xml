@@ -19,24 +19,24 @@
             android:id="@+id/strengthText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Magnet Strength" />
+            android:layout_margin="10dp"
+            android:text="Magnet Strength (positive values attract, negative values repel)" />
 
         <com.google.android.material.slider.Slider xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/strengthSeeker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:valueFrom="-5.0"
-            android:valueTo="5.0"
+            android:valueFrom="-1.0"
+            android:valueTo="1.0"
             android:stepSize="0.01"
-            android:layout_marginTop="10dp" />
+            android:layout_margin="10dp" />
 
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/magnetRadiusText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_margin="10dp"
             android:text="Magnet Radius" />
 
         <com.google.android.material.slider.Slider xmlns:android="http://schemas.android.com/apk/res/android"
@@ -46,7 +46,7 @@
             android:valueFrom="0.0"
             android:valueTo="5.0"
             android:stepSize="0.1"
-            android:layout_marginTop="10dp" />
+            android:layout_margin="10dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,44 +59,50 @@
             android:id="@+id/pendulumTensionText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Particle Tension" />
+            android:layout_margin="10dp"
+            android:text="Sand tension (pulls towards center)" />
 
         <com.google.android.material.slider.Slider xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/tensionSeeker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:valueFrom="0.0"
-            android:valueTo="0.1"
-            android:stepSize="0.001"
-            android:layout_marginTop="10dp" />
+            android:valueTo="0.01"
+            android:stepSize="0.0001"
+            android:layout_margin="10dp" />
 
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/frictionText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Particle Friction" />
+            android:layout_margin="10dp"
+            android:text="Sand friction (slows down velocity)" />
 
         <com.google.android.material.slider.Slider xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/frictionSeeker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:valueFrom="0.0"
+            android:valueTo="0.25"
+            android:stepSize="0.01"
+            android:layout_margin="10dp" />
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/massText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Particle Mass" />
+            android:layout_margin="10dp"
+            android:text="Sand mass" />
 
         <com.google.android.material.slider.Slider xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/massSeeker"
+            android:valueFrom="0.1"
+            android:valueTo="5.0"
+            android:stepSize="0.1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_margin="10dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -109,14 +115,18 @@
             android:id="@+id/intervalText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_margin="10dp"
             android:text="Emitter Interval (lower is faster)" />
 
         <com.google.android.material.slider.Slider xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/intervalSeeekr"
+            android:id="@+id/emitterSeeker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+
+            android:valueFrom="1"
+            android:valueTo="50"
+            android:stepSize="1"
+            android:layout_margin="10dp" />
 
     </LinearLayout>
 </LinearLayout>

@@ -1,23 +1,23 @@
 package com.leungjch.physicsfractals
 
 import android.content.DialogInterface
-import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.google.android.material.slider.Slider
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var gameView : GameView
     private lateinit var placementDialog: AlertDialog
+    private lateinit var settingsDialog: AlertDialog
 
     companion object {
         init {
@@ -51,9 +51,11 @@ class MainActivity : AppCompatActivity() {
         val placementButton : Button = findViewById(R.id.placementButton)
         val displayButton : Button = findViewById(R.id.displayButton)
         val optionButton : Button = findViewById(R.id.optionButton)
+        val rainButton : Button = findViewById(R.id.rainButton)
+
         resetButton.setOnClickListener{
-            gameView.clearAll()
-            Toast.makeText(applicationContext, "hi", Toast.LENGTH_SHORT).show()
+            RustUniverse.clearAndSpawnRandomMagnets(Random.nextInt(1, gameView.randomize_magnets_n));
+            gameView.renderFractalIteratively()
         }
 
         loadButton.setOnClickListener{
@@ -64,22 +66,45 @@ class MainActivity : AppCompatActivity() {
             showPlacementDialog()
         }
 
+        rainButton.setOnClickListener {
+            if (gameView.isRain) {
+                gameView.rain(10)
+                rainButton.setBackgroundColor(Color.WHITE)
+                rainButton.text = "RAIN ON"
+            } else {
+                gameView.rain(0)
+                rainButton.setBackgroundColor(0xFFFF0000.toInt())
+                rainButton.text = "RAIN OFF"
+            }
+            gameView.isRain = !gameView.isRain
+
+        }
+
         displayButton.setOnClickListener {
-            println("HIII")
             when (gameView.displayType) {
                 GameView.DISPLAY_TYPES.ALL -> {
                   gameView.displayType = GameView.DISPLAY_TYPES.BACKGROUND_ONLY
+                    Toast.makeText(applicationContext,
+                        "Showing background only", Toast.LENGTH_SHORT).show()
+                    displayButton.text = "BG ONLY"
               }
                 GameView.DISPLAY_TYPES.BACKGROUND_ONLY -> {
                     gameView.displayType = GameView.DISPLAY_TYPES.NO_BACKGROUND
+                    Toast.makeText(applicationContext,
+                        "Showing no background", Toast.LENGTH_SHORT).show()
+                    displayButton.text = "NO BG"
                 }
 
                 GameView.DISPLAY_TYPES.NO_BACKGROUND -> {
                     gameView.displayType = GameView.DISPLAY_TYPES.ALL
+                    Toast.makeText(applicationContext,
+                        "Showing everything", Toast.LENGTH_SHORT).show()
+                    displayButton.text = "ALL"
                 }
             }
         }
         optionButton.setOnClickListener {
+            showSettingsDialog()
         }
 
 
@@ -101,18 +126,84 @@ class MainActivity : AppCompatActivity() {
                 android.R.string.no, Toast.LENGTH_SHORT).show()
         }
 
-        builder.setNeutralButton("Randomize") { dialog, which ->
-            Toast.makeText(applicationContext,
-                "Randomize", Toast.LENGTH_SHORT).show()
-            gameView.clearAndRandomize(3)
-        }
+        var values : Array<String>  = arrayOf("Double" , "Triple",  "Quadruple", "Blank")
+        builder.setSingleChoiceItems(values, -1,
+            DialogInterface.OnClickListener { dialog, item ->
+                gameView.clearAll()
+                when (item) {
+                    GameView.PRESET_TYPES.DOUBLE.ordinal -> {
+                        RustUniverse.spawnMagnet(16.0, 16.0, 0.5, 2.50)
+                        RustUniverse.spawnMagnet(48.0, 48.0, 0.5, 2.50)
+                    }
+                    GameView.PRESET_TYPES.TRIPLE.ordinal -> {
+                        RustUniverse.spawnMagnet(16.0, 32.0, 0.5, 2.50)
+                        RustUniverse.spawnMagnet(32.0, 16.0, 0.5, 2.50)
+                        RustUniverse.spawnMagnet(48.0, 32.0, 0.5, 2.50)
+                    }
+                    GameView.PRESET_TYPES.QUADRUPLE.ordinal -> {
+                        RustUniverse.spawnMagnet(16.0, 16.0, 0.5, 2.50)
+                        RustUniverse.spawnMagnet(16.0, 48.0, 0.5, 2.50)
+                        RustUniverse.spawnMagnet(48.0, 16.0, 0.5, 2.50)
+                        RustUniverse.spawnMagnet(48.0, 48.0, 0.5, 2.50)
+                    }
+                    GameView.PRESET_TYPES.BLANK.ordinal -> {
+                        RustUniverse.clearAll();
+                    }
+                }
+                gameView.renderFractalIteratively()
+            })
         builder.show()
+    }
+
+    fun showSettingsDialog() {
+        var builder = AlertDialog.Builder(this)
+        builder.setTitle("Settings")
+        val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val dialogView: View = inflater.inflate(R.layout.settings_dialog, null)
+
+        val stepsSlider: Slider = dialogView.findViewById(R.id.stepsSeeker)
+        val qualitySlider: Slider = dialogView.findViewById(R.id.qualitySeeker)
+
+        stepsSlider.value = gameView.steps.toFloat()
+        qualitySlider.value = gameView.maxItersFactor.toFloat()
+
+        stepsSlider.addOnChangeListener { slider, value, fromUser ->
+            RustUniverse.setSteps(value.toInt())
+            gameView.steps = value.toInt()
+
+        }
+        stepsSlider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener{
+            override fun onStartTrackingTouch(slider: Slider) {
+//                // Responds to when slider's touch event is being started
+            }
+            override fun onStopTrackingTouch(slider: Slider) {
+                // Responds to when slider's touch event is being stopped
+                gameView.renderFractalIteratively()
+            }
+        })
+        qualitySlider.addOnChangeListener { slider, value, fromUser ->
+            gameView.maxItersFactor = value.toInt()
+        }
+        qualitySlider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener{
+            override fun onStartTrackingTouch(slider: Slider) {
+//                // Responds to when slider's touch event is being started
+            }
+            override fun onStopTrackingTouch(slider: Slider) {
+                // Responds to when slider's touch event is being stopped
+                gameView.renderFractalIteratively()
+            }
+        })
+
+        builder.setView(dialogView)
+        settingsDialog = builder.create()
+        settingsDialog.show()
+
     }
 
     fun showPlacementDialog() {
         var builder = AlertDialog.Builder(this)
-        builder.setTitle("Set placement type")
-        var values : Array<String>  = arrayOf("Particle" , "Magnet",  "Emitter")
+        builder.setTitle("Set object type")
+        var values : Array<String>  = arrayOf("Sand" , "Magnet",  "Emitter")
         val placementButton : Button = findViewById(R.id.placementButton)
         val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val dialogView: View = inflater.inflate(R.layout.options_dialog, null)
@@ -121,7 +212,7 @@ class MainActivity : AppCompatActivity() {
         val particleOptions : View = dialogView.findViewById(R.id.particleOptions)
         val emitterOptions : View = dialogView.findViewById(R.id.emitterOptions)
         magnetOptions.isVisible=gameView.placementType==GameView.PLACEMENT_TYPES.MAGNET
-        particleOptions.isVisible=gameView.placementType==GameView.PLACEMENT_TYPES.PARTICLE
+        particleOptions.isVisible=gameView.placementType==GameView.PLACEMENT_TYPES.SAND
         emitterOptions.isVisible=gameView.placementType==GameView.PLACEMENT_TYPES.EMITTER
 
 //        Set slider defaults
@@ -136,6 +227,9 @@ class MainActivity : AppCompatActivity() {
         val radiusSeeeker : Slider = dialogView.findViewById(R.id.radiusSeeker)
         strengthSlider.value = gameView.magnet_strength.toFloat()
         radiusSeeeker.value = gameView.magnet_radius.toFloat()
+
+        val emitterSlider : Slider = dialogView.findViewById(R.id.emitterSeeker)
+        emitterSlider.value = gameView.emitter_interval.toFloat()
 
         tensionSlider.addOnChangeListener { slider, value, fromUser ->
             gameView.pendulum_tension = value.toDouble()
@@ -180,6 +274,9 @@ class MainActivity : AppCompatActivity() {
             gameView.magnet_strength = value.toDouble()
         }
 
+        emitterSlider.addOnChangeListener { slider, value, fromUser ->
+            gameView.emitter_interval = value.toInt()
+        }
         builder.setSingleChoiceItems(values, gameView.placementType.ordinal,
             DialogInterface.OnClickListener { dialog, item ->
                 when (item) {
@@ -189,8 +286,8 @@ class MainActivity : AppCompatActivity() {
                         particleOptions.isVisible=false
                         emitterOptions.isVisible=false
                     }
-                    GameView.PLACEMENT_TYPES.PARTICLE.ordinal -> {
-                        gameView.placementType = GameView.PLACEMENT_TYPES.PARTICLE
+                    GameView.PLACEMENT_TYPES.SAND.ordinal -> {
+                        gameView.placementType = GameView.PLACEMENT_TYPES.SAND
                         magnetOptions.isVisible=false
                         particleOptions.isVisible=true
                         emitterOptions.isVisible=false
@@ -204,7 +301,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 placementButton.text = gameView.placementType.toString()
-
             })
         builder.setView(dialogView)
         placementDialog = builder.create()

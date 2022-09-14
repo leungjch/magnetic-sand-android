@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#648dae"
-            android:text="Particle"
+            android:text="Sand"
 
             android:textColor="#ffffff" />
 
@@ -141,12 +141,21 @@
         <Button
             android:id="@+id/displayButton"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#648dae"
-            android:text="View"/>
+            android:background="#909090"
+            android:textColor="#ffffff"
+            android:text="All"/>
 
+        <Button
+            android:id="@+id/rainButton"
+            android:layout_width="wrap_content"
+            android:layout_toLeftOf="@id/displayButton"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#909090"
+            android:textColor="#ffffff"
+            android:text="Rain OFF"/>
     </LinearLayout>
 
 </RelativeLayout>
